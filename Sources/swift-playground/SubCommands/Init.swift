@@ -23,6 +23,9 @@ extension SwiftPlaygroundCommand {
             let packagePath = workspacePath.appendingPathComponent("Package.swift")
             let appPath = workspacePath.appendingPathComponent("App.swift")
             
+            let currentPackagePath = rootPath.appendingPathComponent("Package.swift")
+            let isPackagePath = FileManager.default.fileExists(atPath: currentPackagePath.path)
+            
             if !FileManager.default.fileExists(atPath: workspacePath.path) {
                 try FileManager.default.createDirectory(
                     at: workspacePath,
@@ -30,16 +33,18 @@ extension SwiftPlaygroundCommand {
                 )
             }
             
-            try Package(
+            let package = Package(
                 name: name,
                 bundleIdentifier: bundleIdentifier,
-                teamIdentifier: teamIdentifier
+                teamIdentifier: teamIdentifier,
+                hasDependencyPlaceholder: isPackagePath
             )
-            .make()
-            .write(to: packagePath, atomically: true, encoding: .utf8)
+            try PackageRenderer(package: package)
+                .render()
+                .write(to: packagePath, atomically: true, encoding: .utf8)
             
-            try App()
-                .make()
+            try AppRenderer()
+                .render()
                 .write(to: appPath, atomically: true, encoding: .utf8)
         }
     }

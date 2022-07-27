@@ -10,6 +10,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.3"),
+        .package(url: "https://github.com/stencilproject/Stencil", from: "0.14.2"),
     ],
     targets: [
         .executableTarget(
@@ -18,7 +19,14 @@ let package = Package(
                 .product(
                     name: "ArgumentParser",
                     package: "swift-argument-parser"
+                ),
+                .product(
+                    name: "Stencil",
+                    package: "Stencil"
                 )
+            ],
+            resources: [
+                .process("templates")
             ]
         )
     ]
