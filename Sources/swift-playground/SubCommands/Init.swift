@@ -3,6 +3,9 @@ import Foundation
 
 extension SwiftPlaygroundCommand {
     struct Init: ParsableCommand {
+        @Argument
+        var path: String = FileManager.default.currentDirectoryPath
+        
         @Option
         var name: String = "Playground"
         
@@ -14,7 +17,7 @@ extension SwiftPlaygroundCommand {
         
         func run() throws {
             let rootPath = URL(
-                fileURLWithPath: FileManager.default.currentDirectoryPath
+                fileURLWithPath: path
             )
             let workspacePath = rootPath.appendingPathComponent("\(name).swiftpm")
             let packagePath = workspacePath.appendingPathComponent("Package.swift")
