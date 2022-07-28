@@ -1,5 +1,7 @@
 # swift-playground
 
+![](https://github.com/henzai-apps/swift-playground/blob/main/.github/sample.gif)
+
 ## Usage
 
 ```swift
