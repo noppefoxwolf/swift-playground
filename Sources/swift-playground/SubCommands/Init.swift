@@ -19,16 +19,16 @@ extension SwiftPlaygroundCommand {
             let currentDirectoryURL = URL(
                 fileURLWithPath: path
             )
-            let workspaceURL = currentDirectoryURL.appendingPathComponent("\(name).swiftpm")
-            let packageURL = workspaceURL.appendingPathComponent("Package.swift")
-            let appURL = workspaceURL.appendingPathComponent("App.swift")
+            let playgroundURL = currentDirectoryURL.appendingPathComponent("\(name).swiftpm")
+            let playgroundPackageURL = playgroundURL.appendingPathComponent("Package.swift")
+            let playgroundAppURL = playgroundURL.appendingPathComponent("App.swift")
             
             let currentPackageURL = currentDirectoryURL.appendingPathComponent("Package.swift")
             let dependency = chooseDependency(packageSwiftURL: currentPackageURL)
             
-            if !FileManager.default.fileExists(atPath: workspaceURL.path) {
+            if !FileManager.default.fileExists(atPath: playgroundURL.path) {
                 try FileManager.default.createDirectory(
-                    at: workspaceURL,
+                    at: playgroundURL,
                     withIntermediateDirectories: false
                 )
             }
@@ -41,11 +41,11 @@ extension SwiftPlaygroundCommand {
             )
             try PackageRenderer(options: packageOptions)
                 .render()
-                .write(to: packageURL, atomically: true, encoding: .utf8)
+                .write(to: playgroundPackageURL, atomically: true, encoding: .utf8)
             
             try AppRenderer()
                 .render()
-                .write(to: appURL, atomically: true, encoding: .utf8)
+                .write(to: playgroundAppURL, atomically: true, encoding: .utf8)
         }
         
         func chooseDependency(packageSwiftURL: URL) -> PackageOptions.Dependency? {
@@ -96,6 +96,10 @@ extension SwiftPlaygroundCommand {
             let jsonData = pipe.fileHandleForReading.readDataToEndOfFile()
             let package = try JSONDecoder().decode(Package.self, from: jsonData)
             return package
+        }
+        
+        func openPlayground() {
+            
         }
     }
 }

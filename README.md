@@ -22,6 +22,3 @@ mint install henzai-apps/swift-playground@main
 
 [noppefoxwolf](https://twitter.com/noppefoxwolf)
 
-## LICENSE
-
-TBD
