@@ -46,6 +46,8 @@ extension SwiftPlaygroundCommand {
             try AppRenderer()
                 .render()
                 .write(to: playgroundAppURL, atomically: true, encoding: .utf8)
+            
+            openPlayground(url: playgroundURL)
         }
         
         func chooseDependency(packageSwiftURL: URL) -> PackageOptions.Dependency? {
@@ -98,8 +100,11 @@ extension SwiftPlaygroundCommand {
             return package
         }
         
-        func openPlayground() {
-            
+        func openPlayground(url: URL) {
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/usr/bin/xed")
+            process.arguments = [url.path]
+            process.launch()
         }
     }
 }
