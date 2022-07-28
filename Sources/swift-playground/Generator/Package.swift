@@ -1,6 +1,6 @@
 import Stencil
 
-struct Package {
+struct PackageOptions {
     let name: String
     let bundleIdentifier: String
     let teamIdentifier: String
@@ -8,12 +8,12 @@ struct Package {
 }
 
 struct PackageRenderer {
-    let package: Package
+    let options: PackageOptions
     
     func render() -> String {
         let environment = Environment(loader: FileSystemLoader(bundle: [.module]))
         let rendered = try! environment.renderTemplate(name: "Package.swift", context: [
-            "package" : package
+            "package" : options
         ])
         return rendered
     }
