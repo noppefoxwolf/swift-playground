@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "swift-playground",
+    platforms: [.macOS(.v12)],
     products: [
         .executable(name: "swift-playground", targets: ["swift-playground"])
     ],
