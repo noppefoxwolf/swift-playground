@@ -24,7 +24,7 @@ extension SwiftPlaygroundCommand {
             let appURL = workspaceURL.appendingPathComponent("App.swift")
             
             let currentPackageURL = currentDirectoryURL.appendingPathComponent("Package.swift")
-            let dependency = try chooseDependency(packageSwiftURL: currentPackageURL)
+            let dependency = chooseDependency(packageSwiftURL: currentPackageURL)
             
             if !FileManager.default.fileExists(atPath: workspaceURL.path) {
                 try FileManager.default.createDirectory(
@@ -48,8 +48,13 @@ extension SwiftPlaygroundCommand {
                 .write(to: appURL, atomically: true, encoding: .utf8)
         }
         
-        func chooseDependency(packageSwiftURL: URL) throws -> PackageOptions.Dependency? {
-            let package = try getSwiftPackage(url: packageSwiftURL)
+        func chooseDependency(packageSwiftURL: URL) -> PackageOptions.Dependency? {
+            guard FileManager.default.fileExists(atPath: packageSwiftURL.path) else {
+                return nil
+            }
+            guard let package = try? getSwiftPackage(url: packageSwiftURL) else {
+                return nil
+            }
             if package.products.count == 0 {
                 return nil
             }
@@ -77,7 +82,7 @@ extension SwiftPlaygroundCommand {
                 }
                 break
             }
-            throw NSError()
+            return nil
         }
         
         func getSwiftPackage(url: URL) throws -> Package {
