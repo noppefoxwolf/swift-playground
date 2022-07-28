@@ -24,22 +24,7 @@ extension SwiftPlaygroundCommand {
             let appURL = workspaceURL.appendingPathComponent("App.swift")
             
             let currentPackageURL = currentDirectoryURL.appendingPathComponent("Package.swift")
-            let isPackagePath = FileManager.default.fileExists(atPath: currentPackageURL.path)
-            
-            print("Choose dependency product:")
-            let package = try getSwiftPackage(url: currentPackageURL)
-            let products = package.products.map(\.name).enumerated()
-            for (offset, product) in products {
-                print("\(offset)) \(product)")
-            }
-            
-            print("Enter the number of the product to select:")
-            while let input = readLine(strippingNewline: true) {
-                if !input.isEmpty {
-                    print(input)
-                    break
-                }
-            }
+            let dependency = try chooseDependency(packageSwiftURL: currentPackageURL)
             
             if !FileManager.default.fileExists(atPath: workspaceURL.path) {
                 try FileManager.default.createDirectory(
@@ -52,7 +37,7 @@ extension SwiftPlaygroundCommand {
                 name: name,
                 bundleIdentifier: bundleIdentifier,
                 teamIdentifier: teamIdentifier,
-                hasDependencyPlaceholder: isPackagePath
+                dependency: dependency
             )
             try PackageRenderer(options: packageOptions)
                 .render()
@@ -61,6 +46,38 @@ extension SwiftPlaygroundCommand {
             try AppRenderer()
                 .render()
                 .write(to: appURL, atomically: true, encoding: .utf8)
+        }
+        
+        func chooseDependency(packageSwiftURL: URL) throws -> PackageOptions.Dependency? {
+            let package = try getSwiftPackage(url: packageSwiftURL)
+            if package.products.count == 0 {
+                return nil
+            }
+            if package.products.count == 1 {
+                return PackageOptions.Dependency(
+                    productName: package.products[0].name,
+                    packageName: package.name
+                )
+            }
+            
+            print("Choose dependency product:")
+            let products = package.products.map(\.name).enumerated()
+            for (offset, product) in products {
+                print("\(offset)) \(product)")
+            }
+            print("Enter the number of the product to select:")
+            while let input = readLine(strippingNewline: true) {
+                if let offset = Int(input) {
+                    let packageName = package.name
+                    let productName = package.products[offset].name
+                    return PackageOptions.Dependency(
+                        productName: productName,
+                        packageName: packageName
+                    )
+                }
+                break
+            }
+            throw NSError()
         }
         
         func getSwiftPackage(url: URL) throws -> Package {

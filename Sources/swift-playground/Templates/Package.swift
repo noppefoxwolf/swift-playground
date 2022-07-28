@@ -28,7 +28,7 @@ let package = Package(
             ]
         )
     ],
-    {% if package.hasDependencyPlaceholder %}
+    {% if package.dependency %}
     dependencies: [
         .package(path: "../")
     ],
@@ -36,10 +36,12 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "AppModule",
-            {% if package.hasDependencyPlaceholder %}
+            {% if package.dependency %}
             dependencies: [
-                // FIXME: Fill your dependency.
-                .product(name: <#Name#>, package: <#Package#>)
+                .product(
+                    name: "{{ package.dependency.productName }}",
+                    package: "{{ package.dependency.packageName }}"
+                )
             ],
             {% endif %}
             path: "."

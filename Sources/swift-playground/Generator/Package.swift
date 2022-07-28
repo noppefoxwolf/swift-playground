@@ -4,7 +4,12 @@ struct PackageOptions {
     let name: String
     let bundleIdentifier: String
     let teamIdentifier: String
-    let hasDependencyPlaceholder: Bool
+    
+    struct Dependency {
+        let productName: String
+        let packageName: String
+    }
+    let dependency: Dependency?
 }
 
 struct PackageRenderer {
