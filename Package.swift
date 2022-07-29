@@ -18,6 +18,12 @@ let package = Package(
         .executableTarget(
             name: "swift-playground",
             dependencies: [
+                "SwiftPlaygroundCLI"
+            ]
+        ),
+        .target(
+            name: "SwiftPlaygroundCLI",
+            dependencies: [
                 .product(
                     name: "ArgumentParser",
                     package: "swift-argument-parser"

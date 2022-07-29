@@ -1,5 +1,6 @@
 import ArgumentParser
 import Foundation
+import SwiftPlaygroundCLI
 
 extension SwiftPlaygroundCommand {
     struct Init: ParsableCommand {
