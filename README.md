@@ -14,11 +14,7 @@ Enter the number of the product to select: 0
 
 ## Installation
 
-### Mint
-
-```
-mint install henzai-apps/swift-playground@main
-```
+TBD
 
 ## Author
 
