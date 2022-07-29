@@ -1,14 +1,9 @@
-import Foundation
 import Stencil
-import PathKit
 
-public struct AppRenderer {
-    public init() {}
-    public func render() -> String {
-        let path = Path.bundledTemplates + "App.swift.stencil"
-        let template: String = try! path.read()
-        let environment = Environment()
-        let rendered = try! environment.renderTemplate(string: template, context: [:])
+struct AppRenderer {
+	func render() -> String {
+        let environment = Environment(loader: FileSystemLoader(bundle: [.module]))
+        let rendered = try! environment.renderTemplate(name: "App.swift", context: [:])
         return rendered
 	}
 }
