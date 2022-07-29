@@ -1,5 +1,6 @@
 import Stencil
 import Foundation
+import PathKit
 
 struct PackageOptions {
     let name: String
@@ -17,8 +18,8 @@ struct PackageRenderer {
     let options: PackageOptions
     
     func render() -> String {
-        let filePath = Bundle.module.path(forResource: "templates", ofType: nil)! + "/Package.swift.stencil"
-        let template = try! String(contentsOfFile: filePath)
+        let path = Path(Bundle.module.path(forResource: "templates", ofType: nil)!) + "Package.swift.stencil"
+        let template: String = try! path.read()
         let environment = Environment()
         let rendered = try! environment.renderTemplate(string: template, context: [
             "package" : options
