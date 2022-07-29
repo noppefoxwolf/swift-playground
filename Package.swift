@@ -27,7 +27,7 @@ let package = Package(
                 )
             ],
             resources: [
-                .process("templates")
+                .copy("templates")
             ]
         )
     ]
