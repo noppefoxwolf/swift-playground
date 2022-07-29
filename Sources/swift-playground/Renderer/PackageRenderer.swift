@@ -16,7 +16,7 @@ struct PackageRenderer {
     let options: PackageOptions
     
     func render() -> String {
-        let environment = Environment(loader: FileSystemLoader(bundle: [.module]))
+        let environment = Environment(loader: FileSystemLoader(bundle: [BundleToken.bundle]))
         let rendered = try! environment.renderTemplate(name: "Package.swift", context: [
             "package" : options
         ])
