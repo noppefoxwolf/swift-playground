@@ -1,8 +1,8 @@
-struct Package: Codable {
-    let name: String
-    let products: [Product]
+public struct Package: Codable {
+    public let name: String
+    public let products: [Product]
 }
 
-struct Product: Codable {
-    let name: String
+public struct Product: Codable {
+    public let name: String
 }
