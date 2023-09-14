@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stencilproject/Stencil.git",
       "state" : {
-        "revision" : "ccd9402682f4c07dac9561befd207c8156e80e20",
-        "version" : "0.14.2"
+        "revision" : "4f222ac85d673f35df29962fc4c36ccfdaf9da5b",
+        "version" : "0.15.1"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "df9ee6676cd5b3bf5b330ec7568a5644f547201b",
-        "version" : "1.1.3"
+        "revision" : "8f4d2753f0e4778c76d5f05ad16c74f707390531",
+        "version" : "1.2.3"
       }
     }
   ],
