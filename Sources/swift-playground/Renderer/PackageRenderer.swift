@@ -5,6 +5,7 @@ import PathKit
 struct PackageOptions {
     let swiftVersion: String
     let name: String
+    let platform: String
     let bundleIdentifier: String
     let teamIdentifier: String
     
