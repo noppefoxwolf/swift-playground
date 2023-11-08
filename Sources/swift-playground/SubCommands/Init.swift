@@ -44,6 +44,7 @@ extension SwiftPlaygroundCommand {
             let packageOptions = PackageOptions(
                 swiftVersion: swiftVersion,
                 name: name,
+                platform: platform,
                 bundleIdentifier: bundleIdentifier,
                 teamIdentifier: teamIdentifier,
                 dependency: dependency
