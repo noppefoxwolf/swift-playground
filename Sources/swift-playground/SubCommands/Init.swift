@@ -15,6 +15,12 @@ extension SwiftPlaygroundCommand {
         @Option
         var teamIdentifier: String = ""
         
+        @Option
+        var platform: String = #".iOS(.v16)"#
+        
+        @Option
+        var swiftVersion: String = "5.9"
+        
         func run() throws {
             let currentDirectoryURL = URL(
                 fileURLWithPath: path
@@ -24,7 +30,9 @@ extension SwiftPlaygroundCommand {
             let playgroundAppURL = playgroundURL.appendingPathComponent("App.swift")
             
             let currentPackageURL = currentDirectoryURL.appendingPathComponent("Package.swift")
-            let dependency = chooseDependency(packageSwiftURL: currentPackageURL)
+            let dependency = try chooseDependency(
+                packageSwiftURL: currentPackageURL
+            )
             
             if !FileManager.default.fileExists(atPath: playgroundURL.path) {
                 try FileManager.default.createDirectory(
@@ -34,6 +42,7 @@ extension SwiftPlaygroundCommand {
             }
             
             let packageOptions = PackageOptions(
+                swiftVersion: swiftVersion,
                 name: name,
                 bundleIdentifier: bundleIdentifier,
                 teamIdentifier: teamIdentifier,
@@ -50,13 +59,11 @@ extension SwiftPlaygroundCommand {
             openPlayground(url: playgroundURL)
         }
         
-        func chooseDependency(packageSwiftURL: URL) -> PackageOptions.Dependency? {
+        func chooseDependency(packageSwiftURL: URL) throws -> PackageOptions.Dependency? {
             guard FileManager.default.fileExists(atPath: packageSwiftURL.path) else {
                 return nil
             }
-            guard let package = try? getSwiftPackage(url: packageSwiftURL) else {
-                return nil
-            }
+            let package = try getSwiftPackage(url: packageSwiftURL)
             if package.products.count == 0 {
                 return nil
             }

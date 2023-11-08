@@ -2,44 +2,32 @@ import Stencil
 import Foundation
 import PathKit
 
-public struct PackageOptions {
-    public init(name: String, bundleIdentifier: String, teamIdentifier: String, dependency: PackageOptions.Dependency?) {
-        self.name = name
-        self.bundleIdentifier = bundleIdentifier
-        self.teamIdentifier = teamIdentifier
-        self.dependency = dependency
-    }
-    
+struct PackageOptions {
+    let swiftVersion: String
     let name: String
     let bundleIdentifier: String
     let teamIdentifier: String
     
-    public struct Dependency {
-        public init(productName: String, packageName: String) {
-            self.productName = productName
-            self.packageName = packageName
-        }
-        
+    struct Dependency {
         let productName: String
         let packageName: String
     }
     let dependency: Dependency?
 }
 
-public struct PackageRenderer {
-    public init(options: PackageOptions) {
-        self.options = options
-    }
+struct PackageRenderer {
+    let options: PackageOptions
     
-    public let options: PackageOptions
-    
-    public func render() -> String {
+    func render() throws -> String {
         let path = Path.bundledTemplates + "Package.swift.stencil"
-        let template: String = try! path.read()
+        let template: String = try path.read()
         let environment = Environment()
-        let rendered = try! environment.renderTemplate(string: template, context: [
-            "package" : options
-        ])
+        let rendered = try environment.renderTemplate(
+            string: template,
+            context: [
+                "package" : options
+            ]
+        )
         return rendered
     }
 }
