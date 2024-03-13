@@ -16,10 +16,10 @@ extension SwiftPlaygroundCommand {
         var teamIdentifier: String = ""
         
         @Option
-        var platform: String = #".iOS(.v16)"#
+        var platform: String = #".iOS(.v17)"#
         
         @Option
-        var swiftVersion: String = "5.9"
+        var swiftVersion: String = "5.10"
         
         func run() throws {
             let currentDirectoryURL = URL(

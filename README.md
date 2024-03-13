@@ -14,7 +14,19 @@ Enter the number of the product to select: 0
 
 ## Installation
 
-TBD
+```
+swift package experimental-install
+```
+
+### Uninstall
+
+```
+swift package experimental-uninstall swift-playground
+```
+
+# Requirements
+
+Swift 5.10
 
 ## Author
 
