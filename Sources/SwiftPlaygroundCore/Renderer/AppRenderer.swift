@@ -1,6 +1,6 @@
 import Foundation
-import Stencil
 import PathKit
+import Stencil
 
 struct AppRenderer {
     func render() throws -> String {
@@ -9,5 +9,5 @@ struct AppRenderer {
         let environment = Environment()
         let rendered = try environment.renderTemplate(string: template, context: [:])
         return rendered
-	}
+    }
 }

@@ -1,12 +1,9 @@
-import ArgumentParser
+import SwiftPlaygroundCore
 
-struct SwiftPlaygroundCommand: ParsableCommand {
-    static var configuration = CommandConfiguration(
-        commandName: "swift-playground",
-        subcommands: [
-            Init.self,
-        ]
-    )
+struct SwiftPlaygroundCLI {
+    static func main() async {
+        await SwiftPlaygroundCommand.main()
+    }
 }
 
-SwiftPlaygroundCommand.main()
+await SwiftPlaygroundCLI.main()

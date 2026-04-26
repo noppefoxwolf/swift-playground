@@ -1,6 +1,6 @@
-import Stencil
 import Foundation
 import PathKit
+import Stencil
 
 struct PackageOptions {
     let swiftVersion: String
@@ -8,7 +8,7 @@ struct PackageOptions {
     let platform: String
     let bundleIdentifier: String
     let teamIdentifier: String
-    
+
     struct Dependency {
         let productName: String
         let packageName: String
@@ -18,7 +18,7 @@ struct PackageOptions {
 
 struct PackageRenderer {
     let options: PackageOptions
-    
+
     func render() throws -> String {
         let path = Path.bundledTemplates + "Package.swift.stencil"
         let template: String = try path.read()
@@ -26,7 +26,7 @@ struct PackageRenderer {
         let rendered = try environment.renderTemplate(
             string: template,
             context: [
-                "package" : options
+                "package": options
             ]
         )
         return rendered
