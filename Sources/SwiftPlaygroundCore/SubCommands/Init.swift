@@ -7,7 +7,7 @@ extension SwiftPlaygroundCommand {
         var path: String = FileManager.default.currentDirectoryPath
 
         @Option
-        var name: String = "Playground"
+        var name: String = "Example"
 
         @Option
         var bundleIdentifier: String = UUID().uuidString
