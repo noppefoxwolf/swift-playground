@@ -10,7 +10,7 @@ extension SwiftPlaygroundCommand {
         var name: String = "Example"
 
         @Option
-        var bundleIdentifier: String = UUID().uuidString
+        var bundleIdentifier: String = "com.example.${SAMPLE_CODE_DISAMBIGUATOR}"
 
         @Option
         var teamIdentifier: String = ""
