@@ -10,7 +10,7 @@ extension SwiftPlaygroundCommand {
         var name: String = "Example"
 
         @Option
-        var bundleIdentifier: String = "com.example.${SAMPLE_CODE_DISAMBIGUATOR}"
+        var bundleIdentifier: String = "com.example.app"
 
         @Option
         var teamIdentifier: String = ""
