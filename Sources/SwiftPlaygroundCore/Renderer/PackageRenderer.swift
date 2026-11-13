@@ -18,7 +18,6 @@ struct PackageRenderer {
     let options: PackageOptions
 
     func render() throws -> String {
-        let template = try URL.bundledTemplate(named: "Package.swift.stencil")
         return TemplateRenderer(
             values: [
                 "package.swiftVersion": options.swiftVersion,
@@ -32,7 +31,7 @@ struct PackageRenderer {
             conditions: [
                 "package.dependency": options.dependency != nil
             ]
-        ).render(template)
+        ).render(Templates.package)
     }
 }
 

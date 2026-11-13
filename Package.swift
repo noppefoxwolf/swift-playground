@@ -29,9 +29,6 @@ let package = Package(
                     name: "ArgumentParser",
                     package: "swift-argument-parser"
                 ),
-            ],
-            resources: [
-                .copy("templates")
             ]
         ),
         .testTarget(

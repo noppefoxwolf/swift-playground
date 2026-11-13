@@ -1,0 +1,67 @@
+enum Templates {
+    static let app = #"""
+    import SwiftUI
+
+    @main
+    struct App: SwiftUI.App {
+        var body: some Scene {
+            WindowGroup {
+                Text("Hello, world!")
+            }
+        }
+    }
+    """#
+
+    static let package = #"""
+    // swift-tools-version: {{ package.swiftVersion }}
+
+    import PackageDescription
+    import AppleProductTypes
+
+    let package = Package(
+        name: "{{ package.name }}",
+        platforms: [
+            {{ package.platform }}
+        ],
+        products: [
+            .iOSApplication(
+                name: "{{ package.name }}",
+                targets: ["AppModule"],
+                bundleIdentifier: "{{ package.bundleIdentifier }}",
+                teamIdentifier: "{{ package.teamIdentifier }}",
+                displayVersion: "1.0",
+                bundleVersion: "1",
+                supportedDeviceFamilies: [
+                    .pad,
+                    .phone
+                ],
+                supportedInterfaceOrientations: [
+                    .portrait,
+                    .landscapeRight,
+                    .landscapeLeft,
+                    .portraitUpsideDown(.when(deviceFamilies: [.pad]))
+                ]
+            )
+        ],
+        {% if package.dependency %}
+        dependencies: [
+            .package(path: "../")
+        ],
+        {% endif %}
+        targets: [
+            .executableTarget(
+                name: "AppModule",
+                {% if package.dependency %}
+                dependencies: [
+                    .product(
+                        name: "{{ package.dependency.productName }}",
+                        package: "{{ package.dependency.packageName }}"
+                    )
+                ],
+                {% endif %}
+                path: "."
+            )
+        ]
+    )
+    """#
+}
